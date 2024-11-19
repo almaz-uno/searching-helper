@@ -51,8 +51,6 @@ func main() {
 			return err
 		}
 
-		log.Error().Err(testAccess(ctx, client)).Msg("test was done")
-
 		echoServer := echo.New()
 		echoServer.Use(middleware.CORS())
 		echoServer.Use(middleware.Logger())

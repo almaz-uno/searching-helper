@@ -1,6 +1,6 @@
 #!/bin/sh -eu
 
-cd /src/app
+cd /app/src
 
 _term() {
   echo "Caught SIGTERM signal!"
@@ -9,8 +9,8 @@ _term() {
 
 trap _term TERM INT
 
-if [ -f "/src/app/.env" ]; then
-    . /src/app/.env
+if [ -f "/app/src/.env" ]; then
+    . /app/src/.env
 fi
 
 go run . &

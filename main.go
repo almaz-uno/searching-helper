@@ -88,8 +88,6 @@ func main() {
 
 		return nil
 	})
-
-	// log.Info().Err(mainErr).Msg("")
 }
 
 func logErrors(next echo.HandlerFunc) echo.HandlerFunc {
@@ -226,61 +224,61 @@ func (gravitsappa *gravitsappa) postDebug(c echo.Context) error {
 	return tmpl.Execute(c.Response(), data)
 }
 
-func testAccess(ctx context.Context, client *elasticsearch.Client) error {
-	request := `{
-  "query": {
-    "bool": {
-      "should": [
-        {
-          "fuzzy": {
-            "Name": {
-              "boost": 1,
-              "value": "Indiana Jones RPG"
-            }
-          }
-        },
-        {
-          "match": {
-            "Genre": {
-              "boost": 2,
-              "query": "Indiana Jones RPG"
-            }
-          }
-        },
-        {
-          "match": {
-            "ConsoleName": {
-              "boost": 2,
-              "query": "Indiana Jones RPG"
-            }
-          }
-        }
-      ]
-    }
-  }
-}`
+// func testAccess(ctx context.Context, client *elasticsearch.Client) error {
+// 	request := `{
+//   "query": {
+//     "bool": {
+//       "should": [
+//         {
+//           "fuzzy": {
+//             "Name": {
+//               "boost": 1,
+//               "value": "Indiana Jones RPG"
+//             }
+//           }
+//         },
+//         {
+//           "match": {
+//             "Genre": {
+//               "boost": 2,
+//               "query": "Indiana Jones RPG"
+//             }
+//           }
+//         },
+//         {
+//           "match": {
+//             "ConsoleName": {
+//               "boost": 2,
+//               "query": "Indiana Jones RPG"
+//             }
+//           }
+//         }
+//       ]
+//     }
+//   }
+// }`
 
-	res, err := client.Search(
-		client.Search.WithContext(ctx),
-		client.Search.WithIndex("videogames"),
-		client.Search.WithBody(strings.NewReader(request)),
-	)
-	if err != nil {
-		return err
-	}
+// 	res, err := client.Search(
+// 		client.Search.WithContext(ctx),
+// 		client.Search.WithIndex("videogames"),
+// 		client.Search.WithBody(strings.NewReader(request)),
+// 	)
+// 	if err != nil {
+// 		return err
+// 	}
 
-	bb, _ := io.ReadAll(res.Body)
-	res.Body.Close()
-	if res.IsError() {
-		return errors.New(fmt.Sprintf("search operation returned status %s: %s", res.Status(), string(bb)))
-	}
+// 	bb, _ := io.ReadAll(res.Body)
+// 	res.Body.Close()
+// 	if res.IsError() {
+// 		return errors.New(fmt.Sprintf("search operation returned status %s: %s", res.Status(), string(bb)))
+// 	}
 
-	r := new(SearchResponse)
-	err = json.Unmarshal(bb, r)
-	if err != nil {
-		return err
-	}
+// 	r := new(SearchResponse)
+// 	err = json.Unmarshal(bb, r)
+// 	if err != nil {
+// 		return err
+// 	}
 
-	q.Q(r)
-	return nil
-}
+// 	q.Q(r)
+// 	return nil
+// }

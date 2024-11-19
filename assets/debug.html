@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content="Searching sport cards" />
+    <meta charset="utf-8" />
+    <title>Debugging search in database</title>
+  </head>
+
+  <body>
+    <h2>Debugging search in database</h2>
+    <form onsubmit="submitButton.disabled = true; submitButton.value='Evaluating...'; return true;" method="post">
+      <label for="q">Query: </label>
+      <input type="text" id="q" name="q" required value="{{.q}}" />
+      <br />
+      <label for="t">Search template: </label><br/>
+      <textarea id="t" name="t" rows="50" cols="100">
+{{.t}}
+        </textarea
+      >
+      <br />
+
+      <input name="submitButton" type="submit" value="Search by this query" />
+    </form>
+
+    {{if .sr}}
+    <pre>{{.sr}}</pre>
+    {{end}}
+
+      {{if .r}}
+<pre>
+Total: {{.r.Hits.Total.Value}}
+Max score: {{.r.Hits.MaxScore}}
+</pre>
+        {{range $i, $h := .r.Hits.Hits}}
+        <h2><a href="https://www.pricecharting.com/game/{{$h.ID}}">{{$h.Source.Name}} · {{$h.Source.ConsoleName}} · {{$h.Source.BroadCategory}}</a></h2>
+        <p>Score: {{$h.Score}}</p>
+        <pre>{{$h.SourceStr}}</pre>
+        {{end}}
+      {{end}}
+
+  </body>
+</html>

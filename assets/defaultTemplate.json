@@ -1,0 +1,50 @@
+{
+    "query": {
+        "function_score": {
+            "field_value_factor": {
+                "field": "PageViews",
+                "factor": 1,
+                "modifier": "sqrt",
+                "missing": 1
+            },
+            "query": {
+                "bool": {
+                    "should": [
+                        {
+                            "fuzzy": {
+                                "All": {
+                                    "boost": 0.75,
+                                    "value": "$$query$$"
+                                }
+                            }
+                        },
+                        {
+                            "fuzzy": {
+                                "Name": {
+                                    "boost": 1,
+                                    "value": "$$query$$"
+                                }
+                            }
+                        },
+                        {
+                            "match": {
+                                "Genre": {
+                                    "boost": 2,
+                                    "query": "$$query$$"
+                                }
+                            }
+                        },
+                        {
+                            "match": {
+                                "ConsoleName": {
+                                    "boost": 2,
+                                    "query": "$$query$$"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

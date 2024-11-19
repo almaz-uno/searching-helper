@@ -103,47 +103,10 @@ func logErrors(next echo.HandlerFunc) echo.HandlerFunc {
 //go:embed assets/debug.html
 var debugHtmlTemplate string
 
+//go:embed assets/defaultTemplate.json
+var defaultTemplate string
+
 const (
-	defaultTemplate = `{
-    "query": {
-        "bool": {
-            "should": [
-                {
-                    "fuzzy": {
-                        "All": {
-                            "boost": 0.75,
-                            "value": "$$query$$"
-                        }
-                    }
-                },
-                {
-                    "fuzzy": {
-                        "Name": {
-                            "boost": 1,
-                            "value": "$$query$$"
-                        }
-                    }
-                },
-                {
-                    "match": {
-                        "Genre": {
-                            "boost": 2,
-                            "query": "$$query$$"
-                        }
-                    }
-                },
-                {
-                    "match": {
-                        "ConsoleName": {
-                            "boost": 2,
-                            "query": "$$query$$"
-                        }
-                    }
-                }
-            ]
-        }
-    }
-}`
 	placeHolder = "$$query$$"
 )
 

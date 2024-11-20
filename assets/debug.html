@@ -23,7 +23,8 @@
     </form>
 
     {{if .sr}}
-    <pre>{{.sr}}</pre>
+    <pre>GET {{.indexName}}/_search
+{{.sr}}</pre>
     {{end}}
 
       {{if .r}}
@@ -32,7 +33,7 @@ Total: {{.r.Hits.Total.Value}}
 Max score: {{.r.Hits.MaxScore}}
 </pre>
         {{range $i, $h := .r.Hits.Hits}}
-        <h2><a href="https://www.pricecharting.com/game/{{$h.ID}}">{{$h.Source.Name}} · {{$h.Source.ConsoleName}} · {{$h.Source.BroadCategory}}</a></h2>
+        <h2><a href="https://www.pricecharting.com/game/{{$h.ID}}">{{$h.Number}}. {{$h.Source.Name}} · {{$h.Source.ConsoleName}} · {{$h.Source.BroadCategory}}</a></h2>
         <p>Score: {{$h.Score}}</p>
         <pre>{{$h.SourceStr}}</pre>
         {{end}}

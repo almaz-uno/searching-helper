@@ -28,6 +28,8 @@ var (
 	cfgListenOn = runt.CfgEnv("LISTEN_ON", ":32080")
 	cfgCertFile = runt.CfgEnv("CERT_FILE", "")
 	cfgKeyFile  = runt.CfgEnv("KEY_FILE", "")
+
+	indexName = "videogames"
 )
 
 type (
@@ -151,11 +153,11 @@ func (gravitsappa *gravitsappa) postDebug(c echo.Context) error {
 	sp = sp[1 : len(sp)-1]
 	sr := strings.Replace(data["t"].(string), placeHolder, sp, -1)
 	data["sr"] = sr
-	q.Q(sr)
+	data["indexName"] = indexName
 
 	res, err := gravitsappa.client.Search(
 		gravitsappa.client.Search.WithContext(c.Request().Context()),
-		gravitsappa.client.Search.WithIndex("videogames"),
+		gravitsappa.client.Search.WithIndex(indexName),
 		gravitsappa.client.Search.WithBody(strings.NewReader(sr)),
 	)
 	if err != nil {
@@ -177,6 +179,7 @@ func (gravitsappa *gravitsappa) postDebug(c echo.Context) error {
 	for i, h := range r.Hits.Hits {
 		zz, _ := json.MarshalIndent(h.Source, "", "  ")
 		r.Hits.Hits[i].SourceStr = string(zz)
+		r.Hits.Hits[i].Number = i + 1
 	}
 
 	q.Q(r)

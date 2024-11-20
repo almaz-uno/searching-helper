@@ -24,6 +24,7 @@ type (
 				Ignored   []string `json:"_ignored,omitempty"`
 				Source    Source   `json:"_source,omitempty"`
 				SourceStr string   `json:"-"`
+				Number    int      `json:"-"`
 			} `json:"hits,omitempty"`
 		} `json:"hits,omitempty"`
 	}

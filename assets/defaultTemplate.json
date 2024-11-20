@@ -1,4 +1,5 @@
 {
+    "size": 10,
     "query": {
         "function_score": {
             "field_value_factor": {

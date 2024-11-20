@@ -1,30 +1,30 @@
 {
     "explain": true,
     "profile": true,
-    "size": 10,
+    "size": 100,
     "query": {
         "function_score": {
             "field_value_factor": {
                 "field": "Pageviews",
-                "factor": 0.1,
-                "modifier": "sqrt",
+                "factor": 2,
+                "modifier": "log1p",
                 "missing": 1
             },
             "query": {
                 "bool": {
                     "should": [
                         {
-                            "fuzzy": {
+                            "match": {
                                 "All": {
-                                    "boost": 0.75,
-                                    "value": "$$query$$"
+                                    "boost": 0.5,
+                                    "query": "$$query$$"
                                 }
                             }
                         },
                         {
                             "fuzzy": {
                                 "Name": {
-                                    "boost": 1,
+                                    "boost": 3,
                                     "value": "$$query$$"
                                 }
                             }
@@ -32,7 +32,7 @@
                         {
                             "match": {
                                 "Genre": {
-                                    "boost": 2,
+                                    "boost": 1,
                                     "query": "$$query$$"
                                 }
                             }
@@ -40,7 +40,15 @@
                         {
                             "match": {
                                 "ConsoleName": {
-                                    "boost": 2,
+                                    "boost": 1,
+                                    "query": "$$query$$"
+                                }
+                            }
+                        },
+                        {
+                            "match": {
+                                "ConsoleNickname": {
+                                    "boost": 1,
                                     "query": "$$query$$"
                                 }
                             }

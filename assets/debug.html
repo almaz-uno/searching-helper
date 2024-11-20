@@ -4,6 +4,12 @@
     <meta name="description" content="Searching sport cards" />
     <meta charset="utf-8" />
     <title>Debugging search in database</title>
+    <script>
+      function copyRawToClipboard() {
+        var copyText = document.getElementById("raw-response");
+        navigator.clipboard.writeText(copyText.innerText)
+      }
+    </script>
   </head>
 
   <body>
@@ -12,7 +18,7 @@
       <label for="q">Query: </label>
       <input type="text" id="q" name="q" required value="{{.q}}" />
       <br />
-      <label for="t">Search template: </label><br/>
+      <label for="t">Search template: </label><br />
       <textarea id="t" name="t" rows="50" cols="100">
 {{.t}}
         </textarea
@@ -23,28 +29,29 @@
     </form>
 
     {{if .sr}}
-    <pre>GET {{.indexName}}/_search
-{{.sr}}</pre>
-    {{end}}
-
-      {{if .r}}
-<pre>
+    <p><a href="#results-block">Go to results</p>
+    <p><a href="#raw-response-block">Go to raw response</a></p>
+    <pre>
+GET {{.indexName}}/_search
+{{.sr}}</pre
+    >
+    {{end}} {{if .r}}
+    <pre>
 Total: {{.r.Hits.Total.Value}}
 Max score: {{.r.Hits.MaxScore}}
-</pre>
-        {{range $i, $h := .r.Hits.Hits}}
-        <h2><a href="https://www.pricecharting.com/game/{{$h.ID}}">{{$h.Number}}. {{$h.Source.Name}} · {{$h.Source.ConsoleName}} · {{$h.Source.BroadCategory}}</a></h2>
-        <p>Score: {{$h.Score}}</p>
-        <pre>{{$h.SourceStr}}</pre>
-        {{end}}
-      {{end}}
-
-    {{if .rawResponse}}
-    <h1>Raw response:</h1>
-    <pre>
+</pre
+    >
+    {{range $i, $h := .r.Hits.Hits}}
+    <a name="results-block"></a>
+    <h2><a href="https://www.pricecharting.com/game/{{$h.ID}}">{{$h.Number}}. {{$h.Source.Name}} · {{$h.Source.ConsoleName}} · {{$h.Source.BroadCategory}}</a></h2>
+    <p>Score: {{$h.Score}}</p>
+    <pre>{{$h.SourceStr}}</pre>
+    {{end}} {{end}} {{if .rawResponse}}
+    <h1 id="raw-response-block">Raw response:</h1>
+    <p><button onclick="copyRawToClipboard()">Copy raw response to Clipboard</button></p>
+    <pre id="raw-response">
 {{.rawResponse}}
     </pre>
     {{end}}
-
   </body>
 </html>

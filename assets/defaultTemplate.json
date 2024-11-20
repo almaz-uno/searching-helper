@@ -6,11 +6,10 @@
         "function_score": {
             "field_value_factor": {
                 "field": "Pageviews",
-                "factor": 1,
+                "factor": 0.1,
                 "modifier": "sqrt",
                 "missing": 1
             },
-
             "query": {
                 "bool": {
                     "should": [

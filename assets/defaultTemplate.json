@@ -1,4 +1,5 @@
 {
+    "explain": true,
     "profile": true,
     "size": 10,
     "query": {

@@ -39,5 +39,12 @@ Max score: {{.r.Hits.MaxScore}}
         {{end}}
       {{end}}
 
+    {{if .rawResponse}}
+    <h1>Raw response:</h1>
+    <pre>
+{{.rawResponse}}
+    </pre>
+    {{end}}
+
   </body>
 </html>

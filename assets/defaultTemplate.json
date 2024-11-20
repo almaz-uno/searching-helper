@@ -1,4 +1,5 @@
 {
+    "profile": true,
     "size": 10,
     "query": {
         "function_score": {

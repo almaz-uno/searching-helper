@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	_ "embed"
 	"encoding/json"
@@ -158,6 +159,7 @@ func (gravitsappa *gravitsappa) postDebug(c echo.Context) error {
 	res, err := gravitsappa.client.Search(
 		gravitsappa.client.Search.WithContext(c.Request().Context()),
 		gravitsappa.client.Search.WithIndex(indexName),
+		gravitsappa.client.Search.WithHuman(),
 		gravitsappa.client.Search.WithBody(strings.NewReader(sr)),
 	)
 	if err != nil {
@@ -181,6 +183,10 @@ func (gravitsappa *gravitsappa) postDebug(c echo.Context) error {
 		r.Hits.Hits[i].SourceStr = string(zz)
 		r.Hits.Hits[i].Number = i + 1
 	}
+
+	buff := &bytes.Buffer{}
+	json.Indent(buff, bb, "", "  ")
+	data["rawResponse"] = string(buff.Bytes())
 
 	q.Q(r)
 	data["r"] = r

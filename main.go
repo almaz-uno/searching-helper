@@ -24,7 +24,7 @@ import (
 
 var (
 	cloudID  = "vgpc:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvOjQ0MyRmZTkzMWJhNDlkODQ0NWQ2YTVmM2FjMGYzOWRkMTNkMiQyYWUwOGNmZjc5NmM0N2YzOTQ4OTU0M2IxZDM3ZWQzNQ=="
-	cloudKey = "cUljY0E1TUJjRGs3UlRjamtxQlk6NE9iZFk5MHVUSFNLUi1pQThZZ3gyZw=="
+	cloudKey = "Y0VpN21KTUJ0VHZNS2xNSVVqb2o6T2hQZHVJeGtTdC1UU0I3M0c2QTRnZw=="
 
 	cfgListenOn = runt.CfgEnv("LISTEN_ON", ":32080")
 	cfgCertFile = runt.CfgEnv("CERT_FILE", "")
